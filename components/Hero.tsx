@@ -3,17 +3,40 @@
 import { Button } from "@/components/ui/button";
 import RotatingText from "./RotatingText";
 import Link from "next/link";
+import { motion, Variants } from "motion/react";
+
+const heroVariants: Variants = {
+  hidden: { opacity: 0, y: 40 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut", staggerChildren: 0.2 },
+  },
+};
+
+const heroItem: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
 
 export const Hero = () => {
   return (
-    <section className="flex py-8 md:py-16 lg:py-20">
-      <div className="w-full flex flex-col gap-4 md:gap-6 ">
+    <motion.section
+      className="flex py-8 md:py-16 lg:py-20"
+      initial="hidden"
+      animate="show"
+      variants={heroVariants}
+    >
+      <motion.div
+        className="w-full flex flex-col gap-4 md:gap-6 "
+        variants={heroItem}
+      >
         <h1 className="font-mono font-semibold text-3xl md:text-5xl lg:text-6xl">
           Hello, I&apos;m
           <span className="text-primary"> Ravi Farhan.</span>
         </h1>
 
-        <div className="flex flex-col gap-1 md:gap-2">
+        <motion.div className="flex flex-col gap-1 md:gap-2" variants={heroItem}>
           <h2 className="font-mono text-2xl md:text-4xl lg:text-5xl leading-tight">
             Let&apos;s build something
           </h2>
@@ -44,17 +67,20 @@ export const Hero = () => {
               together
             </h2>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-2 md:flex gap-4 pt-4">
+        <motion.div
+          className="grid grid-cols-2 md:flex gap-4 pt-4"
+          variants={heroItem}
+        >
           <Button asChild size="lg">
             <Link href="mailto:mhdravifarhan@gmail.com">Get in touch</Link>
           </Button>
           <Button asChild size="lg" variant="outline">
             <Link href="/projects">View projects</Link>
           </Button>
-        </div>
-      </div>
-    </section>
+        </motion.div>
+      </motion.div>
+    </motion.section>
   );
 };

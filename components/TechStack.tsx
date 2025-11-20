@@ -15,6 +15,7 @@ import {
   SiPostgresql,
   SiGithub,
 } from "react-icons/si";
+import { motion, Variants } from "motion/react";
 
 const techLogos = [
   { node: <SiHtml5 />, title: "HTML" },
@@ -31,21 +32,41 @@ const techLogos = [
   { node: <SiGithub />, title: "Github" },
 ];
 
+const sectionVariants: Variants = {
+  hidden: { opacity: 0, y: 60 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut", staggerChildren: 0.2 },
+  },
+};
+
+const blockVariants: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
 export default function TechStack() {
   return (
-    <section className="space-y-8 py-12 md:py-16 lg:py-20">
-      <div>
+    <motion.section
+      className="space-y-8 py-12 md:py-16 lg:py-20"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={sectionVariants}
+    >
+      <motion.div variants={blockVariants}>
+        <h2 className="text-2xl md:text-4xl font-bold font-mono">Tech Stack</h2>
 
-      <h2 className="text-2xl md:text-4xl font-bold font-mono">
-        Tech Stack
-      </h2>
+        <p className="text-sm md:text-base lg:text-lg text-muted-foreground">
+          My core stack for building modern web experiences.
+        </p>
+      </motion.div>
 
-      <p className="text-sm md:text-base lg:text-lg text-muted-foreground">
-        My core stack for building modern web experiences.
-      </p>
-      </div>
-
-      <div className="relative overflow-hidden h-16 mt-4">
+      <motion.div
+        className="relative overflow-hidden h-16 mt-4"
+        variants={blockVariants}
+      >
         <LogoLoop
           logos={techLogos}
           speed={80}
@@ -57,7 +78,7 @@ export default function TechStack() {
           fadeOut
           ariaLabel="Technology stack logos"
         />
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 }

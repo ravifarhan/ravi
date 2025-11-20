@@ -1,8 +1,11 @@
+"use client";
+
 import Link from "next/link";
 
 import { ProjectCard, TProject } from "@/components/ProjectCard";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { motion, Variants } from "motion/react";
 
 const projects: TProject[] = [
   {
@@ -40,38 +43,78 @@ const projects: TProject[] = [
   },
 ];
 
+const sectionVariants: Variants = {
+  hidden: { opacity: 0, y: 60 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const blockVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+};
+
+const listVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { delayChildren: 0.2, staggerChildren: 0.15 },
+  },
+};
+
 export default function Projects() {
   return (
-    <section className="space-y-8 py-12 md:py-16 lg:py-20">
-      <div>
+    <motion.section
+      className="space-y-8 py-12 md:py-16 lg:py-20"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={sectionVariants}
+    >
+      <motion.div variants={blockVariants}>
         <h2 className="text-2xl md:text-4xl font-bold font-mono">
           Featured Projects
         </h2>
         <p className="text-base md:text-lg text-muted-foreground max-w-3xl">
           Some of the projects I&apos;ve created
         </p>
-      </div>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      </motion.div>
+      <motion.div
+        className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+        variants={listVariants}
+      >
         {projects.map((item) => (
-          <ProjectCard
-            key={item.title}
-            title={item.title}
-            summary={item.summary}
-            stack={item.stack}
-            timeline={item.timeline}
-            impact={item.impact}
-            repo={item.repo}
-            deploy={item.deploy}
-          />
+          <motion.div key={item.title} variants={blockVariants}>
+            <ProjectCard
+              title={item.title}
+              summary={item.summary}
+              stack={item.stack}
+              timeline={item.timeline}
+              impact={item.impact}
+              repo={item.repo}
+              deploy={item.deploy}
+            />
+          </motion.div>
         ))}
-      </div>
-      <div>
+      </motion.div>
+      <motion.div variants={blockVariants}>
         <Button asChild size="lg" variant="outline">
           <Link href="/project">
             View all projects <ArrowRight />
           </Link>
         </Button>
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 }
