@@ -31,7 +31,7 @@ export const Hero = () => {
         className="w-full flex flex-col gap-4 md:gap-6 "
         variants={heroItem}
       >
-        <h1 className="font-mono font-semibold text-3xl md:text-5xl lg:text-6xl">
+        <h1 className="font-mono font-semibold text-2xl md:text-5xl lg:text-6xl">
           Hello, I&apos;m
           <span className="text-primary"> Ravi Farhan.</span>
         </h1>

@@ -20,7 +20,7 @@ const fadeUp: Variants = {
 export default function About() {
   return (
     <div className="container mx-auto space-y-12 px-4 py-16 md:px-8 lg:py-24">
-      <div className="grid items-center lg:grid-cols-2">
+      <div className="grid items-center gap-6 lg:grid-cols-2">
         <motion.div
           className="relative mx-auto flex"
           initial={{ opacity: 0, scale: 0.8 }}

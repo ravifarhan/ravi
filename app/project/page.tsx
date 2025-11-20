@@ -1,20 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 
-type ProjectFeature = {
+type ProjectShowcase = {
   title: string;
   role: string;
   description: string;
@@ -26,21 +18,21 @@ type ProjectFeature = {
   demo: string;
 };
 
-const projects: ProjectFeature[] = [
+const projectShowcase: ProjectShowcase[] = [
   {
     title: "FKN E-Commerce",
     role: "Fullstack - 2025",
     description:
-      "An online fashion storefront with a custom admin console, secure authentication, and a frictionless shopping flow from product discovery through checkout.",
+      "An end-to-end fashion storefront with a custom admin console, secure authentication, and a frictionless shopping flow from product discovery through checkout.",
     preview:
       "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1200&q=80",
     alt: "E-commerce storefront on laptop and phone screens",
     highlights: [
       "Role-based dashboards for merchandising and order fulfillment",
       "Optimistic UI updates keep catalog edits snappy",
-      "Secure authentication with Supabase and Better Auth",
+      "Performance budgets enforced to keep LCP under 2s",
     ],
-    stack: ["Next.js", "TypeScript", "Supabase", "Better Auth", "Tailwind CSS", "Shadcn UI"],
+    stack: ["Next.js", "TypeScript", "Supabase", "Shadcn UI"],
     repo: "https://github.com/ravifarhan/fkn",
     demo: "https://fkn.vercel.app",
   },
@@ -53,8 +45,8 @@ const projects: ProjectFeature[] = [
       "https://images.unsplash.com/photo-1517244683847-7456b63c5969?auto=format&fit=crop&w=1200&q=80",
     alt: "Minimalistic invitation layout with pictures and text blocks",
     highlights: [
-      "Dynamic event sections powered by React Bits",
-      "Customizable sections for hero, gallery, schedule, and RSVP",
+      "Drag-and-drop section ordering with instant preview",
+      "Form validations keep RSVPs clean for hosts",
       "Global theming for light and dark invites",
     ],
     stack: ["Next.js", "TypeScript", "Tailwind CSS", "React Bits"],
@@ -80,10 +72,10 @@ const projects: ProjectFeature[] = [
   },
 ];
 
-export default function ProjectsPage() {
+export default function ProjectPage() {
   return (
     <div className="container mx-auto space-y-12 px-4 py-12 md:space-y-16 md:px-8 lg:py-20">
-      {/* <section className="grid gap-6 rounded-2xl border bg-linear-to-br from-primary/10 via-background to-primary/5 p-8 lg:grid-cols-2 md:p-12 lg:p-16">
+      <section className="grid gap-6 rounded-2xl border bg-linear-to-br from-primary/10 via-background to-primary/5 p-8 md:grid-cols-[1.1fr_0.9fr] md:p-12 lg:p-16">
         <div className="space-y-4">
           <Badge className="w-fit rounded-full px-4 py-1 text-xs uppercase tracking-[0.2em]">
             Project Lab
@@ -130,7 +122,7 @@ export default function ProjectsPage() {
             </p>
           </div>
         </div>
-      </section> */}
+      </section>
 
       <section className="space-y-6">
         <div className="space-y-2">
@@ -144,78 +136,73 @@ export default function ProjectsPage() {
         </div>
 
         <div className="space-y-10">
-          {projects.map((project) => (
-            <Card
+          {projectShowcase.map((project) => (
+            <article
               key={project.title}
-              className="overflow-hidden border bg-linear-to-br from-primary/10 via-background to-primary/5 shadow-lg shadow-primary/10 transition-shadow duration-300 hover:shadow-primary/20"
+              className="grid gap-6 overflow-hidden rounded-2xl border bg-card shadow-lg shadow-primary/5 md:grid-cols-[1.05fr_0.95fr]"
             >
-              <div className="grid lg:grid-cols-2 gap-8 px-6 ">
-                <div className="relative min-h-64 overflow-hidden rounded-xl bg-linear-to-tr from-primary/15 via-secondary/10 to-primary/20">
-                  <Image
-                    src={project.preview}
-                    alt={project.alt}
-                    fill
-                    className="object-cover transition duration-500"
-                    sizes="(min-width: 1024px) 640px, 100vw"
-                    // priority={project.title === "FKN E-Commerce"}
-                  />
-                  {/* <div className="absolute inset-0 bg-linear-to-t from-background/70 via-background/5 to-transparent" /> */}
-                  <div className="absolute bottom-3 left-3 flex gap-2">
-                    {project.stack.map((tech) => (
-                      <Badge
-                        key={tech}
-                        // className="bg-background/80 text-xs font-medium backdrop-blur"
-                        variant="secondary"
-                      >
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-4">
-                  <CardHeader className="p-0 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="text-xs">
-                        {project.role}
-                      </Badge>
-                      <span className="text-xs uppercase tracking-[0.2em] text-primary">
-                        Preview
-                      </span>
-                    </div>
-                    <CardTitle className="text-2xl">{project.title}</CardTitle>
-                    <CardDescription className="text-sm leading-relaxed">
-                      {project.description}
-                    </CardDescription>
-                  </CardHeader>
-
-                  <CardContent className="p-0 space-y-2 text-sm leading-relaxed text-foreground/90">
-                    {project.highlights.map((item) => (
-                      <div
-                        key={item}
-                        className="flex items-start gap-2 rounded-lg bg-secondary/40 p-3"
-                      >
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </CardContent>
-
-                  <CardFooter className="p-0 pt-2 flex flex-wrap gap-3">
-                    <Button asChild variant="outline" size="lg">
-                      <Link href={project.repo} target="_blank" rel="noreferrer">
-                        <SiGithub />
-                        View repo
-                      </Link>
-                    </Button>
-                    <Button asChild size="lg">
-                      <Link href={project.demo} target="_blank" rel="noreferrer">
-                        Live preview <ArrowUpRight />
-                      </Link>
-                    </Button>
-                  </CardFooter>
+              <div className="relative min-h-[260px] overflow-hidden bg-linear-to-tr from-primary/15 via-secondary/10 to-primary/20">
+                <Image
+                  src={project.preview}
+                  alt={project.alt}
+                  fill
+                  className="object-cover transition duration-500 hover:scale-105"
+                  sizes="(min-width: 1024px) 640px, 100vw"
+                  priority={project.title === "FKN E-Commerce"}
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-background/70 via-background/20 to-transparent" />
+                <div className="absolute bottom-4 left-4 flex gap-2">
+                  {project.stack.map((tech) => (
+                    <Badge
+                      key={tech}
+                      className="bg-background/80 text-xs font-medium backdrop-blur"
+                    >
+                      {tech}
+                    </Badge>
+                  ))}
                 </div>
               </div>
-            </Card>
+
+              <div className="flex flex-col gap-4 p-6 md:p-8">
+                <div className="space-y-2">
+                  <p className="text-xs uppercase tracking-[0.18em] text-primary">
+                    {project.role}
+                  </p>
+                  <h3 className="text-2xl font-semibold md:text-3xl">
+                    {project.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
+                    {project.description}
+                  </p>
+                </div>
+
+                <ul className="space-y-2 text-sm leading-relaxed text-foreground/90">
+                  {project.highlights.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2 rounded-lg bg-secondary/40 p-3"
+                    >
+                      <span className="mt-0.5 h-2 w-2 rounded-full bg-primary" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="flex flex-wrap gap-3 pt-2">
+                  <Button asChild variant="outline" size="lg">
+                    <Link href={project.repo} target="_blank" rel="noreferrer">
+                      <SiGithub />
+                      View repo
+                    </Link>
+                  </Button>
+                  <Button asChild size="lg">
+                    <Link href={project.demo} target="_blank" rel="noreferrer">
+                      Live preview <ArrowUpRight />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </article>
           ))}
         </div>
       </section>

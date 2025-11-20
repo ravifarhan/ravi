@@ -110,7 +110,7 @@ export default function Projects() {
       </motion.div>
       <motion.div variants={blockVariants}>
         <Button asChild size="lg" variant="outline">
-          <Link href="/project">
+          <Link href="/projects">
             View all projects <ArrowRight />
           </Link>
         </Button>
